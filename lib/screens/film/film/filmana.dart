@@ -1,5 +1,5 @@
-import 'package:filmhub/screens/film/yabanci_film.dart';
-import 'package:filmhub/screens/film/yerli_film.dart';
+import 'package:filmhub/screens/film/film/yabanci_film.dart';
+import 'package:filmhub/screens/film/film/yerli_film.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 

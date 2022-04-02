@@ -80,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextField(
                                 style: TextStyle(color: Colors.white),
                                 cursorColor: Colors.white,
+                                obscureText: true,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius:

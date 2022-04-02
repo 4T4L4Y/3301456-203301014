@@ -1,6 +1,6 @@
 # filmhub
 
-Selçuk Üniversitesi Teknoloji Fakültesi Bilgisayar Mühendisliği bölümü 3301456 Mobil Programlama dersi ara sınavı için Öğretim Görevlisi Ahmet Cevahir ÇINAR mentorluğunda geliştirilmiştir.
+A new Flutter project.
 
 ## Getting Started
 
