@@ -1,8 +1,7 @@
 import 'package:filmhub/screens/dizi/yabanci_dizi.dart';
+import 'package:filmhub/screens/dizi/yerli_dizi.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
-
-import 'yerli_dizi.dart';
 
 class DiziAna extends StatefulWidget {
   const DiziAna({Key? key}) : super(key: key);

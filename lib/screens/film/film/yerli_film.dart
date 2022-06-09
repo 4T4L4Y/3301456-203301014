@@ -1,7 +1,6 @@
+import 'package:filmhub/models/film.dart';
+import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
-
-import '../organizeisler.dart';
-import '../organizeisler2.dart';
 
 class YerliFilm extends StatefulWidget {
   const YerliFilm({Key? key}) : super(key: key);
@@ -14,44 +13,41 @@ class _YerliFilmState extends State<YerliFilm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OrganizeIsler(),
+      backgroundColor: Colors.white,
+      body: StreamBuilder<List<Film>>(
+        stream: FirestoreFilmHelper.readYerliFilms(),
+        builder: (context, AsyncSnapshot<List<Film>> snapshot) {
+          getGameList(AsyncSnapshot<List<Film?>> snapshot) {
+            return snapshot.data!
+                .map(
+                  (film) => ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/${film!.film_Id}');
+                    },
+                    leading: Image.asset(
+                      "assets/images/${film!.film_Id}.jpg",
+                      fit: BoxFit.fill,
+                    ),
+                    title: Text(film.film_Adi),
+                    subtitle: Text(film.film_Turu),
                   ),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/organizeisler.jpg",
-                fit: BoxFit.fill,
+                )
+                .toList();
+          }
+
+          if (snapshot.hasData) {
+            return Column(
+              children: getGameList(snapshot),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                strokeWidth: 3,
               ),
-              title: Text("Organize İşler"),
-              subtitle: Text("Komedi/Drama"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OrganizeIsler2(),
-                  ),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/organizeisler2.jpg",
-                fit: BoxFit.fill,
-              ),
-              title: Text("Organize İşler 2"),
-              subtitle: Text("Komedi/Aksiyon"),
-            ),
-          ],
-        ),
-        color: Colors.white,
+            );
+          }
+        },
       ),
     );
   }

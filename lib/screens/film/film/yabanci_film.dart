@@ -1,7 +1,6 @@
+import 'package:filmhub/models/film.dart';
+import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
-
-import '../dirilis.dart';
-import '../godfather.dart';
 
 class YabanciFilm extends StatefulWidget {
   const YabanciFilm({Key? key}) : super(key: key);
@@ -14,36 +13,41 @@ class _YabanciFilmState extends State<YabanciFilm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            ListTile(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Dirilis()));
-              },
-              leading: Image.asset(
-                "assets/images/dirilis.jpg",
-                fit: BoxFit.fill,
+      backgroundColor: Colors.white,
+      body: StreamBuilder<List<Film>>(
+        stream: FirestoreFilmHelper.readYabanciFilms(),
+        builder: (context, AsyncSnapshot<List<Film>> snapshot) {
+          getGameList(AsyncSnapshot<List<Film?>> snapshot) {
+            return snapshot.data!
+                .map(
+                  (film) => ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/${film!.film_Id}');
+                    },
+                    leading: Image.asset(
+                      "assets/images/${film!.film_Id}.jpg",
+                      fit: BoxFit.fill,
+                    ),
+                    title: Text(film.film_Adi),
+                    subtitle: Text(film.film_Turu),
+                  ),
+                )
+                .toList();
+          }
+
+          if (snapshot.hasData) {
+            return Column(
+              children: getGameList(snapshot),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                strokeWidth: 3,
               ),
-              title: Text("Diriliş"),
-              subtitle: Text("Western/Macera"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GodFather()));
-              },
-              leading: Image.asset(
-                "assets/images/godfather.jpg",
-                fit: BoxFit.fill,
-              ),
-              title: Text("God Father"),
-              subtitle: Text("Suç/Dram"),
-            ),
-          ],
-        ),
-        color: Colors.white,
+            );
+          }
+        },
       ),
     );
   }

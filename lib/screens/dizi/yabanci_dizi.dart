@@ -1,5 +1,5 @@
-import 'package:filmhub/screens/dizi/dark.dart';
-import 'package:filmhub/screens/dizi/lacasadepapel.dart';
+import 'package:filmhub/models/dizi.dart';
+import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
 
 class YabanciDizi extends StatefulWidget {
@@ -13,44 +13,41 @@ class _YabanciDiziState extends State<YabanciDizi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Dark(),
+      backgroundColor: Colors.white,
+      body: StreamBuilder<List<Dizi>>(
+        stream: FirestoreDiziHelper.readYabanciDiziler(),
+        builder: (context, AsyncSnapshot<List<Dizi>> snapshot) {
+          getGameList(AsyncSnapshot<List<Dizi?>> snapshot) {
+            return snapshot.data!
+                .map(
+                  (dizi) => ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/${dizi!.dizi_Id}');
+                    },
+                    leading: Image.asset(
+                      "assets/images/${dizi!.dizi_Id}.jpg",
+                      fit: BoxFit.fill,
+                    ),
+                    title: Text(dizi.dizi_Adi),
+                    subtitle: Text(dizi.dizi_Turu),
                   ),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/dark.jpg",
-                fit: BoxFit.fill,
+                )
+                .toList();
+          }
+
+          if (snapshot.hasData) {
+            return Column(
+              children: getGameList(snapshot),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                strokeWidth: 3,
               ),
-              title: Text("Dark"),
-              subtitle: Text("Gizem"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LaCasaDePapel(),
-                  ),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/lacasadepapel.jpg",
-                fit: BoxFit.fill,
-              ),
-              title: Text("La Casa De Papel"),
-              subtitle: Text("Suç"),
-            ),
-          ],
-        ),
-        color: Colors.white,
+            );
+          }
+        },
       ),
     );
   }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "548118173598",
+    "project_id": "film-hub-8d409",
+    "storage_bucket": "film-hub-8d409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548118173598:android:13bf1eb108ec466bd4688f",
+        "android_client_info": {
+          "package_name": "com.example.filmhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548118173598-s5gfboie2d1q0o1nd6fav7tt80m4sbbm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG79MD0wJLst8wiSiQjGlgKGq4yY8EMWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548118173598-s5gfboie2d1q0o1nd6fav7tt80m4sbbm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,5 @@
-import 'package:filmhub/screens/dizi/yasakelma.dart';
+import 'package:filmhub/models/dizi.dart';
+import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
 
 class YerliDizi extends StatefulWidget {
@@ -12,28 +13,41 @@ class _YerliDiziState extends State<YerliDizi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => YasakElma(),
+      backgroundColor: Colors.white,
+      body: StreamBuilder<List<Dizi>>(
+        stream: FirestoreDiziHelper.readYerliDiziler(),
+        builder: (context, AsyncSnapshot<List<Dizi>> snapshot) {
+          getGameList(AsyncSnapshot<List<Dizi?>> snapshot) {
+            return snapshot.data!
+                .map(
+                  (dizi) => ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/${dizi!.dizi_Id}');
+                    },
+                    leading: Image.asset(
+                      "assets/images/${dizi!.dizi_Id}.jpg",
+                      fit: BoxFit.fill,
+                    ),
+                    title: Text(dizi.dizi_Adi),
+                    subtitle: Text(dizi.dizi_Turu),
                   ),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/yasakelma.jpg",
-                fit: BoxFit.fill,
+                )
+                .toList();
+          }
+
+          if (snapshot.hasData) {
+            return Column(
+              children: getGameList(snapshot),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                strokeWidth: 3,
               ),
-              title: Text("Yasak Elma"),
-              subtitle: Text("Romantik/Drama"),
-            ),
-          ],
-        ),
-        color: Colors.white,
+            );
+          }
+        },
       ),
     );
   }

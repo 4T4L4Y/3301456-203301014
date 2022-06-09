@@ -1,5 +1,8 @@
-import 'package:filmhub/screens/loginpage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../models/user.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -9,6 +12,10 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +58,7 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                             ),
                             TextField(
+                              controller: nameController,
                               cursorColor: Colors.white,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -69,6 +77,26 @@ class _SignInPageState extends State<SignInPage> {
                               height: 10,
                             ),
                             TextField(
+                              controller: emailController,
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      borderSide:
+                                          BorderSide(color: Color(0xFF212121))),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      borderSide:
+                                          BorderSide(color: Color(0xFF212121))),
+                                  labelText: 'Email',
+                                  labelStyle: TextStyle(color: Colors.white)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextField(
+                              controller: passwordController,
                               style: TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
                               decoration: InputDecoration(
@@ -91,11 +119,26 @@ class _SignInPageState extends State<SignInPage> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 50),
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                        onTap: () async {
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim());
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim());
+
+                          final user = HubUser(
+                              name: nameController.text.trim(),
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim());
+
+                          await createUser(
+                              user, FirebaseAuth.instance.currentUser!.uid);
+
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pop(context);
                         },
                         child: Container(
                             width: double.infinity,
@@ -118,5 +161,13 @@ class _SignInPageState extends State<SignInPage> {
         ],
       ),
     );
+  }
+
+  Future createUser(HubUser user, String userId) async {
+    DocumentReference docUser =
+        FirebaseFirestore.instance.collection('users').doc(userId);
+    user.id = docUser.id;
+    final userJson = user.toJson();
+    await docUser.set(userJson);
   }
 }

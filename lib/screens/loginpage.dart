@@ -1,9 +1,11 @@
 import 'package:filmhub/screens/signinpage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'selectionscreen.dart';
 
 class LoginPage extends StatefulWidget {
+  static String routeName = '/loginPage';
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -11,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               TextField(
+                                controller: emailController,
                                 style: TextStyle(color: Colors.white),
                                 cursorColor: Colors.white,
                                 decoration: InputDecoration(
@@ -71,13 +76,14 @@ class _LoginPageState extends State<LoginPage> {
                                             BorderRadius.circular(16.0),
                                         borderSide: BorderSide(
                                             color: Color(0xFF212121))),
-                                    labelText: 'Kullanıcı Adı',
+                                    labelText: 'Email',
                                     labelStyle: TextStyle(color: Colors.white)),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               TextField(
+                                controller: passwordController,
                                 style: TextStyle(color: Colors.white),
                                 cursorColor: Colors.white,
                                 obscureText: true,
@@ -105,12 +111,22 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 50),
                             child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SelectionScreen()));
+                              onTap: () async {
+                                await FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                        email: emailController.text.trim(),
+                                        password:
+                                            passwordController.text.trim());
+
+                                if (FirebaseAuth.instance.currentUser != null) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SelectionScreen(
+                                                userId: FirebaseAuth
+                                                    .instance.currentUser!.uid,
+                                              )));
+                                }
                               },
                               child: Container(
                                   width: double.infinity,
