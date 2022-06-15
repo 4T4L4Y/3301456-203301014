@@ -33,7 +33,7 @@ class _SignInPageState extends State<SignInPage> {
               width: MediaQuery.of(context).size.width,
               child: Image.asset("assets/images/image.jpg", fit: BoxFit.fill)),
           Padding(
-            padding: const EdgeInsets.all(75.0),
+            padding: const EdgeInsets.symmetric(horizontal: 75.0, vertical: 60),
             child: Center(
               child: SingleChildScrollView(
                 child: Column(
@@ -99,6 +99,7 @@ class _SignInPageState extends State<SignInPage> {
                               controller: passwordController,
                               style: TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
+                              obscureText: true,
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16.0),
@@ -120,25 +121,40 @@ class _SignInPageState extends State<SignInPage> {
                           vertical: 8, horizontal: 50),
                       child: GestureDetector(
                         onTap: () async {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim());
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim());
+                          try {
+                            await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim());
+                            await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim());
 
-                          final user = HubUser(
-                              name: nameController.text.trim(),
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim());
+                            final user = HubUser(
+                                name: nameController.text.trim(),
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim());
 
-                          await createUser(
-                              user, FirebaseAuth.instance.currentUser!.uid);
+                            await createUser(
+                                user, FirebaseAuth.instance.currentUser!.uid);
 
-                          await FirebaseAuth.instance.signOut();
-                          Navigator.pop(context);
+                            await FirebaseAuth.instance.signOut();
+                            Navigator.pop(context);
+                            SnackBar snackbar() => SnackBar(
+                                content: Center(
+                                    heightFactor: 1,
+                                    child: Text('Kayıt başarılı.')));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar());
+                          } catch (e) {
+                            SnackBar snackbar() => SnackBar(
+                                content: Center(
+                                    heightFactor: 1,
+                                    child: Text('Kayıt başarısız.')));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar());
+                          }
                         },
                         child: Container(
                             width: double.infinity,

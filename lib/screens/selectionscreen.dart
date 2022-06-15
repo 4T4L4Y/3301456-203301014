@@ -19,6 +19,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Film HUB",
           style: TextStyle(color: Colors.white),
@@ -32,7 +33,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
               width: MediaQuery.of(context).size.width,
               child: Image.asset("assets/images/image.jpg", fit: BoxFit.fill)),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 75, vertical: 160),
+            padding: EdgeInsets.symmetric(horizontal: 75, vertical: 100),
             child: Center(
               child: Column(
                 children: [
@@ -68,6 +69,9 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         )
                       ],
                     ),
+                  ),
+                  Divider(
+                    height: 100,
                   ),
                   Material(
                     borderRadius: BorderRadius.circular(32),

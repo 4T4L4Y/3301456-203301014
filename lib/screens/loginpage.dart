@@ -36,7 +36,8 @@ class _LoginPageState extends State<LoginPage> {
                 child:
                     Image.asset("assets/images/filmhub.png", fit: BoxFit.fill)),
             Padding(
-              padding: const EdgeInsets.all(75.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 75.0, vertical: 60),
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -112,20 +113,41 @@ class _LoginPageState extends State<LoginPage> {
                                 vertical: 8, horizontal: 50),
                             child: GestureDetector(
                               onTap: () async {
-                                await FirebaseAuth.instance
-                                    .signInWithEmailAndPassword(
-                                        email: emailController.text.trim(),
-                                        password:
-                                            passwordController.text.trim());
+                                try {
+                                  await FirebaseAuth.instance
+                                      .signInWithEmailAndPassword(
+                                          email: emailController.text.trim(),
+                                          password:
+                                              passwordController.text.trim());
+                                } catch (r) {
+                                  setState(() {
+                                    SnackBar snackbar() => SnackBar(
+                                        content: Center(
+                                            heightFactor: 1,
+                                            child: Text(
+                                                'Email veya parola hatalı.')));
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackbar());
+                                  });
+                                }
 
                                 if (FirebaseAuth.instance.currentUser != null) {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SelectionScreen(
-                                                userId: FirebaseAuth
-                                                    .instance.currentUser!.uid,
-                                              )));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SelectionScreen(
+                                        userId: FirebaseAuth
+                                            .instance.currentUser!.uid,
+                                      ),
+                                    ),
+                                  );
+
+                                  SnackBar snackbar() => SnackBar(
+                                      content: Center(
+                                          heightFactor: 1,
+                                          child: Text('Giriş yapıldı.')));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackbar());
                                 }
                               },
                               child: Container(
@@ -152,20 +174,21 @@ class _LoginPageState extends State<LoginPage> {
                                         builder: (context) => SignInPage()));
                               },
                               child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black45,
-                                      borderRadius: BorderRadius.circular(12)),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 16, horizontal: 48),
-                                  child: Text(
-                                    "Kayıt Ol",
-                                    style: TextStyle(color: Colors.white),
-                                  )),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Colors.black45,
+                                    borderRadius: BorderRadius.circular(12)),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 48),
+                                child: Text(
+                                  "Kayıt Ol",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
