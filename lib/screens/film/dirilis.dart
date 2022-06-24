@@ -2,6 +2,7 @@ import 'package:filmhub/mycontainers/mycontainer_film.dart';
 import 'package:flutter/material.dart';
 
 class Dirilis extends StatefulWidget {
+  static String routeName = "dirilis";
   const Dirilis({Key? key}) : super(key: key);
 
   @override

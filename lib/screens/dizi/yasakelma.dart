@@ -4,7 +4,7 @@ import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
 
 class YasakElma extends StatefulWidget {
-  static String routeName = '/yasak_elma';
+  static String routeName = 'yasakelma';
   const YasakElma({Key? key}) : super(key: key);
 
   @override

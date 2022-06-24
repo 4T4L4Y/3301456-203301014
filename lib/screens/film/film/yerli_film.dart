@@ -3,6 +3,7 @@ import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
 
 class YerliFilm extends StatefulWidget {
+  static String routeName = "yerlifilm";
   const YerliFilm({Key? key}) : super(key: key);
 
   @override

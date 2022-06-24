@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:filmhub/screens/toplist.dart';
 import 'package:filmhub/screens/userpage.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ import 'dizi/diziana.dart';
 import 'film/film/filmana.dart';
 
 class SelectionScreen extends StatefulWidget {
+  static String routeName = "selectionscreen";
   final String userId;
   const SelectionScreen({Key? key, required this.userId}) : super(key: key);
 
@@ -43,12 +45,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UserPage(
-                                          userId: widget.userId,
-                                        )));
+                            Navigator.pushNamed(context, UserPage.routeName);
                           },
                           child: CircleAvatar(
                             backgroundColor: Colors.black54,
@@ -84,10 +81,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FilmAna()));
+                              Navigator.pushNamed(context, FilmAna.routeName);
                             },
                             child: Container(
                                 width: double.infinity,
@@ -108,10 +102,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DiziAna()));
+                              Navigator.pushNamed(context, DiziAna.routeName);
                             },
                             child: Container(
                                 width: double.infinity,
@@ -122,6 +113,27 @@ class _SelectionScreenState extends State<SelectionScreen> {
                                     vertical: 16, horizontal: 48),
                                 child: Text(
                                   "Diziler",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, TopList.routeName);
+                            },
+                            child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Colors.black45,
+                                    borderRadius: BorderRadius.circular(12)),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 48),
+                                child: Text(
+                                  "En Iyiler",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),

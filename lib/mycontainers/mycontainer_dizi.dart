@@ -1,3 +1,4 @@
+import 'package:filmhub/screens/commits.dart';
 import 'package:flutter/material.dart';
 
 Widget MyDiziContainer(
@@ -40,6 +41,14 @@ Widget MyDiziContainer(
                     ),
                   ),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Commits()));
+                },
+                style: ElevatedButton.styleFrom(primary: Colors.black),
+                child: Text("Yorumlar"),
               ),
               Text(diziadi,
                   style: TextStyle(

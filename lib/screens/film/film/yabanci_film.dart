@@ -3,6 +3,7 @@ import 'package:filmhub/services/firestore_helper.dart';
 import 'package:flutter/material.dart';
 
 class YabanciFilm extends StatefulWidget {
+  static String routeName = "yabancifilm";
   const YabanciFilm({Key? key}) : super(key: key);
 
   @override

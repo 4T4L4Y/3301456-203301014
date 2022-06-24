@@ -24,7 +24,7 @@ class Utils {
       final file = await dosyaGetir();
       return await file.readAsString();
     } catch (e) {
-      return 'hata';
+      return 'Bir hata oluştu.';
     }
   }
 }

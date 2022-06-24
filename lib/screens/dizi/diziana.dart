@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class DiziAna extends StatefulWidget {
+  static String routeName = "diziana";
   const DiziAna({Key? key}) : super(key: key);
 
   @override

@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:filmhub/utils/database_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
 
 class SignInPage extends StatefulWidget {
+  static String routeName = "signinpage";
   const SignInPage({Key? key}) : super(key: key);
 
   @override
@@ -135,7 +137,7 @@ class _SignInPageState extends State<SignInPage> {
                                 name: nameController.text.trim(),
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim());
-
+                            await DatabaseHandler().insertUsers([user]);
                             await createUser(
                                 user, FirebaseAuth.instance.currentUser!.uid);
 

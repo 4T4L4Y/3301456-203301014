@@ -2,6 +2,7 @@ import 'package:filmhub/screens/utils.dart';
 import 'package:flutter/material.dart';
 
 class SavedFilms extends StatefulWidget {
+  static String routeName = "savedfilms";
   const SavedFilms({Key? key}) : super(key: key);
 
   @override
