@@ -1,3 +1,4 @@
+import 'package:filmhub/screens/commits.dart';
 import 'package:flutter/material.dart';
 
 Widget MyFilmContainer(
@@ -42,6 +43,14 @@ Widget MyFilmContainer(
                         )),
                   ),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Commits()));
+                  },
+                  style: ElevatedButton.styleFrom(primary: Colors.black),
+                  child: Text("Yorumlar"),
+                ),
                 Text(
                   filmadi,
                   style: TextStyle(
@@ -56,10 +65,21 @@ Widget MyFilmContainer(
                       color: Colors.black,
                       fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  filmaciklamasi,
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w700),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black.withOpacity(0.3)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        filmaciklamasi,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

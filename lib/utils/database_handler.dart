@@ -6,7 +6,7 @@ class DatabaseHandler {
   Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
     return openDatabase(
-      join(path, 'examplee.db'),
+      join(path, 'usersdatabase.db'),
       onCreate: (database, version) async {
         await database.execute(
           "CREATE TABLE users(id TEXT , name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL)",

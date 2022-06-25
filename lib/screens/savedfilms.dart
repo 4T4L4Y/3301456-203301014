@@ -15,6 +15,13 @@ class _SavedFilmsState extends State<SavedFilms> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "İzlenecekler",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+      ),
       body: Stack(
         children: [
           Container(
@@ -37,7 +44,7 @@ class _SavedFilmsState extends State<SavedFilms> {
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16.0),
                             borderSide: BorderSide(color: Color(0xFF212121))),
-                        labelText: 'Film adı',
+                        labelText: 'Film veya dizi adı',
                         labelStyle: TextStyle(color: Colors.white)),
                   ),
                   ElevatedButton(
@@ -64,7 +71,7 @@ class _SavedFilmsState extends State<SavedFilms> {
                           },
                         );
                       },
-                      child: Text('Kayıtlı filmleri göster')),
+                      child: Text('Kaydedilenleri göster')),
                   Divider(),
                   Container(
                     color: Colors.white70,

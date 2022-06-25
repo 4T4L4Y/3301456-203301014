@@ -125,7 +125,7 @@ class _UserPageState extends State<UserPage> {
                   onPressed: () {
                     Navigator.pushNamed(context, SavedFilms.routeName);
                   },
-                  child: Text('İzlenecek filmler'),
+                  child: Text('İzlenecekler'),
                 ),
                 ElevatedButton(
                   style: ButtonStyle(

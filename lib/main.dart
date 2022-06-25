@@ -2,9 +2,10 @@ import 'package:filmhub/screens/changepassword.dart';
 import 'package:filmhub/screens/commits.dart';
 import 'package:filmhub/screens/dizi/diziana.dart';
 import 'package:filmhub/screens/dizi/yabanci_dizi.dart';
-import 'package:filmhub/screens/dizi/yasakelma.dart';
+import 'package:filmhub/screens/dizi/yasak_elma.dart';
 import 'package:filmhub/screens/dizi/yerli_dizi.dart';
 import 'package:filmhub/screens/film/dirilis.dart';
+import 'package:filmhub/screens/film/film/filmana.dart';
 import 'package:filmhub/screens/film/film/yabanci_film.dart';
 import 'package:filmhub/screens/film/film/yerli_film.dart';
 import 'package:filmhub/screens/film/godfather.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         TopList.routeName: (context) => TopList(),
         UserAgreements.routeName: (context) => UserAgreements(),
         DiziAna.routeName: (context) => DiziAna(),
+        FilmAna.routeName: (context) => FilmAna(),
         OrganizeIsler.routeName: (context) => OrganizeIsler(),
         OrganizeIsler2.routeName: (context) => OrganizeIsler2(),
         Dark.routeName: (context) => Dark(),
